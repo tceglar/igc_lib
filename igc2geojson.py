@@ -88,11 +88,12 @@ def main():
     global_thermals = []
 
     ### Analyse files
-    for file in files:
+    files_count = len(files)
+    for i,file in enumerate(files):
         flight = igc_lib.Flight.create_from_file("{0}/{1}".format(dir, file))
         
         if flight.valid:
-            print(file)
+            print("{}/{} :{}".format(i+1,files_count, file))
             #print_flight_details(flight)
             global_thermals.extend(flight.thermals)
 
@@ -105,3 +106,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    exit()
