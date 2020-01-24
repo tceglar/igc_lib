@@ -3,21 +3,19 @@ from __future__ import print_function
 
 import os
 import sys
-
 import igc_lib
 import lib.dumpers as dumpers
+import argparse     as ap
 
 
 def print_flight_details(flight):
     print("Flight:", flight)
     print("Takeoff:", flight.takeoff_fix)
     thermals = flight.thermals
-    glides = flight.glides
-    for i in range(max(len(thermals), len(glides))):
-        if i < len(glides):
-            print("  glide[%d]:" % i, glides[i])
-        if i < len(thermals):
-            print("  thermal[%d]:" % i, thermals[i])
+
+    for i in range(len(thermals)):
+        thermal = thermals[i]
+        print("  thermal[%d]:" % i, thermals[i])
     print("Landing:", flight.landing_fix)
 
 
@@ -41,13 +39,10 @@ def dump_flight(flight, input_file):
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: %s file.igc [file.lkt]" % sys.argv[0])
+        print("Usage: %s file.igc" % sys.argv[0])
         sys.exit(1)
 
     input_file = sys.argv[1]
-    task_file = None
-    if len(sys.argv) > 2:
-        task_file = sys.argv[2]
 
     flight = igc_lib.Flight.create_from_file(input_file)
     if not flight.valid:
@@ -56,13 +51,7 @@ def main():
         sys.exit(1)
 
     print_flight_details(flight)
-    dump_flight(flight, input_file)
-
-    if task_file:
-        task = igc_lib.Task.create_from_lkt_file(task_file)
-        reached_turnpoints = task.check_flight(flight)
-        for t, fix in enumerate(reached_turnpoints):
-            print("Turnpoint[%d] achieved at:" % t, fix.rawtime)
+    #dump_flight(flight, input_file)
 
 
 if __name__ == "__main__":

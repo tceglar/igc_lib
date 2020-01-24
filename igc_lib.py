@@ -427,9 +427,7 @@ class Thermal:
         return self.__str__()
 
     def __str__(self):
-        hms = _rawtime_float_to_hms(self.time_change())
-        return ("Thermal(vertical_velocity=%.2f m/s, duration=%dm %ds)" %
-                (self.vertical_velocity(), hms.minutes, hms.seconds))
+        return 'Thermal: vertical_velocity={:.2f} m/s \t enter_fix={}'.format(self.vertical_velocity(), self.enter_fix)
 
 
 class Glide:
@@ -1164,7 +1162,8 @@ class Flight:
                 thermal = Thermal(first_fix, fix)
                 if (thermal.time_change() >
                         self._config.min_time_for_thermal - 1e-5):
-                    self.thermals.append(thermal)
+                    if thermal.vertical_velocity() > 0.0:                     # Make sure we're adding climbs only
+                        self.thermals.append(thermal)
                     # glide ends at start of thermal
                     glide = Glide(first_glide_fix, first_fix,
                                   distance_start_circling)
