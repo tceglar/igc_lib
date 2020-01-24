@@ -1,19 +1,14 @@
-A simple library to parse IGC logs and extract thermals.
+A simple library based on:
+igc_lib : https://github.com/xiadz/igc_lib
 
-Uses ground speed to detect flight and aircraft bearing rate of
-change to detect thermalling. Both are smoothed using the
-Viterbi algorithm.
 
-The code has been battle-tested against a couple hundred thousand
-IGC files. Detects various anomalies in the logs and marks files
-as suspicious/invalid, providing an explaination for the decision.
-If you find an IGC file on which the library misbehaves please
-open a GitHub issue, we'd be happy to investigate.
+
+Uses igc_lib to detect thermals
+Output the result in geoJson format to be imported into https://studio.mapbox.com/ or http://geojson.tools/
 
 Example usage:
 
 ```
-  python igc_lib_demo.py some_file.igc
+  python igc2geojson.py <folder containing .igc files> <.geojson output filename>
 ```
 
-Should work both on Python 2.7 and on Python 3.

@@ -116,42 +116,42 @@ def get_training_sequences(files):
 
 
 def stop_function(log_likelihood_change, num_iterations):
-    print "num_iterations: %d" % num_iterations,
-    print "log_likelihood_change: %f" % log_likelihood_change
+    print ("num_iterations: %d" % num_iterations),
+    print ("log_likelihood_change: %f" % log_likelihood_change)
     return log_likelihood_change < 0.05 and num_iterations > 5
 
 
 def main():
     if len(sys.argv) != 2:
-        print "Usage: %s directory_with_igc_files"
+        print ("Usage: %s directory_with_igc_files")
         sys.exit(1)
 
     learning_dir = sys.argv[1]
     files = list_igc_files(learning_dir)
-    print "Found %d IGC files in '%s'." % (len(files), learning_dir)
+    print ("Found %d IGC files in '%s'." % (len(files), learning_dir))
 
-    print "Reading and processing files"
+    print ("Reading and processing files")
     circling_sequences, flying_sequences = get_training_sequences(files)
-    print "Found %d valid tracks." % len(circling_sequences)
+    print ("Found %d valid tracks." % len(circling_sequences))
 
     if len(circling_sequences) == 0:
-        print "Found no valid tracks. Aborting."
+        print ("Found no valid tracks. Aborting.")
         sys.exit(1)
 
     flying_mm = initial_markov_model_flying()
     trainer = BaumWelchTrainer(flying_mm)
     trainer.train(flying_sequences, stop_function)
-    print "Flying model training complete!"
+    print ("Flying model training complete!")
 
     circling_mm = initial_markov_model_circling()
     trainer = BaumWelchTrainer(circling_mm)
     trainer.train(circling_sequences, stop_function)
-    print "Circling model training complete!"
+    print ("Circling model training complete!")
 
-    print "flying_mm.transition_prob:", flying_mm.transition_prob
-    print "flying_mm.emission_prob:", flying_mm.emission_prob
-    print "circling_mm.transition_prob:", circling_mm.transition_prob
-    print "circling_mm.emission_prob:", circling_mm.emission_prob
+    print ("flying_mm.transition_prob:", flying_mm.transition_prob)
+    print ("flying_mm.emission_prob:", flying_mm.emission_prob)
+    print ("circling_mm.transition_prob:", circling_mm.transition_prob)
+    print ("circling_mm.emission_prob:", circling_mm.emission_prob)
 
 
 if __name__ == "__main__":

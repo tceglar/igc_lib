@@ -4,13 +4,17 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>c7d8a499-cb80-42f1-807a-a8fa5c50e7e2</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>test_igc_lib.py</StartupFile>
+    <StartupFile>igc2geojson.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>github_igc_lib</Name>
     <RootNamespace>github_igc_lib</RootNamespace>
+    <IsWindowsApplication>True</IsWindowsApplication>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <CommandLineArguments>D:\_Downloads\igc\igc-Francois D:\_Downloads\igc\heatmap</CommandLineArguments>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,7 +26,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="igc_lib.py" />
-    <Compile Include="igc_lib_demo.py" />
+    <Compile Include="igc2geojson.py" />
     <Compile Include="lib\dumpers.py" />
     <Compile Include="lib\geo.py" />
     <Compile Include="lib\test_dumpers.py" />
@@ -40,6 +44,7 @@
     <Folder Include="tools\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="README.md" />
     <Content Include="testfiles\flight_with_middle_landing.igc" />
     <Content Include="testfiles\napret.igc" />
     <Content Include="testfiles\napret.lkt" />
