@@ -47,13 +47,23 @@ def dump_to_geojson(output_filename, list_thermals):
 
     for thermal in list_thermals:
         #print(thermal)
-        lat = thermal.enter_fix.lat
-        lon = thermal.enter_fix.lon
+        lat_enter, lon_enter = thermal.enter_fix.lat, thermal.enter_fix.lon
+        lat_exit, lon_exit = thermal.exit_fix.lat, thermal.exit_fix.lon
+        time_enter = thermal.enter_fix.rawtime
+        time_exit = thermal.exit_fix.rawtime
+        altitude_enter = int(thermal.enter_fix.press_alt)
+        altitude_exit = int(thermal.exit_fix.press_alt)
         vario = round(thermal.vertical_velocity(),2)
-        altitude = int(thermal.enter_fix.press_alt)
 
-        json_point=gjson.Point((lon, lat, altitude))
-        features.append(gjson.Feature(geometry=json_point, properties={"vario": vario, "altitude": altitude}))
+        # Writes as a single point with enter properties
+        json_point=gjson.Point((lon_enter, lat_enter, altitude_enter))
+        features.append(gjson.Feature(geometry=json_point, properties={"vario": vario, 
+        "t_enter": time_enter, "t_exit": time_exit, "alt_enter": altitude_enter, "alt_exit": altitude_exit}))
+
+        # Writes as a line between the enter and the exit
+        json_line=gjson.LineString([(lon_enter, lat_enter, altitude_enter),(lon_exit, lat_exit, altitude_exit)])
+        features.append(gjson.Feature(geometry=json_line, properties={"vario": vario, 
+        "t_enter": time_enter, "t_exit": time_exit, "alt_enter": altitude_enter, "alt_exit": altitude_exit}))
 
     feature_collection = gjson.FeatureCollection(features)
     #Write output
