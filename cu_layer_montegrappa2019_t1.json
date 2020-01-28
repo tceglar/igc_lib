@@ -1,0 +1,89 @@
+{
+    "sources": {
+      "task-thermal-source": {
+        "type": "geojson",
+        "data": "https://raw.githubusercontent.com/tceglar/igc_lib/master/1580129515_montegrappa2019_t1.geojson"
+      }
+    },
+    "layers": [{
+        "id": "montegrappa2019-t1 lines",
+        "type": "line",
+        "source": "composite",
+        "source-layer": "montegrappa2019_t1",
+        "layout": {"line-cap": "round"},
+        "paint": {
+            "line-color": [
+                "interpolate",
+                ["linear"],
+                ["get", "vario"],
+                0.01,
+                "#f0f724",
+                1,
+                "#fca537",
+                2,
+                "#e06363",
+                3,
+                "#b02991",
+                5,
+                "hsl(278, 100%, 33%)",
+                5.2,
+                "hsl(244, 90%, 28%)"
+            ],
+            "line-opacity": [
+                "interpolate",
+                ["linear"],
+                ["get", "vario"],
+                0.1,
+                0.1,
+                0.5,
+                0.1,
+                1.01,
+                0.65
+            ],
+            "line-blur": 5,
+            "line-width": [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
+                11,
+                8,
+                12,
+                9,
+                15,
+                16
+            ]
+        }
+    },
+    {
+        "id": "montegrappa2019-t1 numbers",
+        "type": "symbol",
+        "source": "composite",
+        "source-layer": "montegrappa2019_t1",
+        "layout": {
+            "text-field": [
+                "step",
+                ["zoom"],
+                ["to-string", ["get", "vario"]],
+                22,
+                ["to-string", ["get", "vario"]]
+            ],
+            "text-size": 14
+        },
+        "paint": {
+            "text-halo-color": "hsla(0, 0%, 0%, 0)",
+            "text-opacity": [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
+                0,
+                0,
+                13,
+                0,
+                14.1,
+                1
+            ]
+        }
+    }
+
+    ]
+  }
