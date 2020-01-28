@@ -1,6 +1,6 @@
 {
     "sources": {
-      "task-thermal-source": {
+      "montegrappa2019_t1": {
         "type": "geojson",
         "data": "https://raw.githubusercontent.com/tceglar/igc_lib/master/1580129515_montegrappa2019_t1.geojson"
       }
